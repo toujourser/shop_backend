@@ -1,0 +1,5 @@
+{
+  "app_name": "vue_shop",
+  "port": "8081",
+  "mode": "dev"
+}
