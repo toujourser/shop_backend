@@ -1,4 +1,4 @@
-gormlog: true
+gormlog: false
 
 mysql:
   username: "root"

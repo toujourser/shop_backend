@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"vue_shop/utils"
 )
 
 func main() {
@@ -17,8 +16,20 @@ func main() {
 	//argsTest("a", 1, "b", 2)
 
 
-	println(utils.VerifyEmailFormat("tom@gmail.com"))
-	println(utils.VerifyMobile("18861730375"))
+	//println(utils.VerifyEmailFormat("tom@gmail.com"))
+	//println(utils.VerifyMobile("18861730375"))
+	copySlice()
+}
+
+func copySlice(){
+	a := []string{"a", "b", "c", "d"}
+	var b []string
+	b = append(b, a...)
+
+	a[1] = "bbbb"
+	b[0] = "aaa"
+	fmt.Printf("%+v \n", a)
+	fmt.Printf("%+v \n", b)
 }
 
 func argsTest(args ...interface{}) {

@@ -88,13 +88,29 @@ func (c *UserController) PutBy(id int) {
 func (c *UserController) Put() {
 	userId, _ := c.Ctx.Params().GetInt("uid")
 	userState, _ := c.Ctx.Params().GetBool("state")
-	println("----", userId, userState)
 
 	if data, err := c.Service.UserState(userId, userState); err != nil {
 		c.Common.ReturnJson(500, err.Error())
 		return
 	} else {
 		c.Common.ReturnSuccess(data)
+	}
+
+}
+
+// 分配用户角色
+func (c *UserController) PutRole() {
+	userId, _ := c.Ctx.Params().GetInt("uid")
+	args := map[string]int{}
+	if err := c.Ctx.ReadJSON(&args); err != nil {
+		c.ReturnJson(400, "参数错误")
+		return
+	}
+	if data, err := c.Service.UserImpower(userId, args["rid"]); err != nil {
+		c.ReturnJson(500, "参数错误")
+		return
+	} else {
+		c.ReturnSuccess(data)
 	}
 
 }
