@@ -9,6 +9,12 @@ type Common struct {
 	Ctx iris.Context
 }
 
+func (c *Common) ParseParams(ctx iris.Context) map[string]interface{} {
+	params := map[string]interface{}{}
+	ctx.ReadJSON(&params)
+	return params
+}
+
 func (c *Common) ReturnJson(status int, msg string, args ...interface{}) {
 	result := map[string]interface{}{}
 	data := map[string]interface{}{}
@@ -40,12 +46,12 @@ func (c *Common) ReturnJson(status int, msg string, args ...interface{}) {
 	return
 }
 
-func (this *Common) ReturnSuccess(args ...interface{}) {
+func (c *Common) ReturnSuccess(args ...interface{}) {
 	result := make(map[string]interface{})
 	//result["code"] = utils.RCODE_OK
 	//result["message"] = utils.RecodeText(utils.RCODE_OK)
 
-	if args != nil{
+	if args != nil {
 		result["data"] = args[0]
 	}
 
@@ -66,8 +72,7 @@ func (this *Common) ReturnSuccess(args ...interface{}) {
 	//}
 	//result["data"] = data
 
-
-	this.Ctx.JSON(result)
-	this.Ctx.StopExecution()
+	c.Ctx.JSON(result)
+	c.Ctx.StopExecution()
 	return
 }

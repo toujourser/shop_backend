@@ -7,12 +7,18 @@ import (
 )
 
 func InitRoute(app *iris.Application) {
-	mvc.New(app.Party("/api/v1.0/user")).Handle(controllers.NewUserController())
-	mvc.New(app.Party("/api/v1.0/user/{uid:int}")).Handle(controllers.NewUserController())
-	mvc.New(app.Party("/api/v1.0/user/{uid:int}/state/{state:boolean}")).Handle(controllers.NewUserController())
-	mvc.New(app.Party("/api/v1.0/menus")).Handle(controllers.NewMenusController())
-	mvc.New(app.Party("/api/v1.0/rights")).Handle(controllers.NewRightsController())
-	mvc.New(app.Party("/api/v1.0/roles")).Handle(controllers.NewRolesController())
-	mvc.New(app.Party("/api/v1.0/roles/{roleId:int}/rights/{rightId:int}")).Handle(controllers.NewRolesController())
-	mvc.New(app.Party("/api/v1.0/roles/{roleId:int}")).Handle(controllers.NewRolesController())
+	api := mvc.New(app.Party("/api/v1.0"))
+	api.Party("/user").Handle(controllers.NewUserController())
+	api.Party("/user/{uid:int}").Handle(controllers.NewUserController())
+	api.Party("/user/{uid:int}/state/{state:boolean}").Handle(controllers.NewUserController())
+	api.Party("/menus").Handle(controllers.NewMenusController())
+	api.Party("/rights").Handle(controllers.NewRightsController())
+	api.Party("/role").Handle(controllers.NewRolesController()) // 根据ID获取单个角色 删除角色
+	api.Party("/roles").Handle(controllers.NewRolesController())
+	api.Party("/roles/{roleId:int}/rights/{rightId:int}").Handle(controllers.NewRolesController())
+	api.Party("/roles/{roleId:int}").Handle(controllers.NewRolesController())
+
+	api.Party("/categories").Handle(controllers.NewCategoriesController())
+	api.Party("/categories/{id:int}").Handle(controllers.NewCategoriesController()) // 分类参数管理
+
 }
