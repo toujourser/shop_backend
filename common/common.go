@@ -2,6 +2,7 @@ package common
 
 import (
 	"github.com/kataras/iris/v12"
+	"github.com/spf13/cast"
 	"vue_shop/utils"
 )
 
@@ -75,4 +76,18 @@ func (c *Common) ReturnSuccess(args ...interface{}) {
 	c.Ctx.JSON(result)
 	c.Ctx.StopExecution()
 	return
+}
+
+// 解析分页数据
+func (c *Common) ParsePageData(ctx iris.Context) (pageNum, pageSize int) {
+	pageNum = cast.ToInt(ctx.URLParam("pagenum"))
+	pageSize = cast.ToInt(ctx.URLParam("pagesize"))
+	if pageNum == 0 && pageSize == 0 {
+		pageNum = 1
+		pageSize = 2000
+	}
+	if pageSize >= 2000 {
+		pageSize = 2000
+	}
+	return pageNum, pageSize
 }

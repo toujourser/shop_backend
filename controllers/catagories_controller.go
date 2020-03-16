@@ -20,7 +20,7 @@ func NewCategoriesController() *CategoriesController {
 // 商品分类数据列表
 func (c *CategoriesController) Get() {
 	_type := cast.ToInt(c.Ctx.URLParam("type"))
-	pageNum, pageSize := ParsePageData(c.Ctx)
+	pageNum, pageSize := c.ParsePageData(c.Ctx)
 	data := c.Service.List(_type, pageNum, pageSize)
 	c.ReturnSuccess(data)
 }
@@ -28,10 +28,10 @@ func (c *CategoriesController) Get() {
 // 添加分类
 func (c *CategoriesController) Post() {
 	params := c.ParseParams(c.Ctx)
-	if data, err:=c.Service.Create(params);err !=nil{
+	if data, err := c.Service.Create(params); err != nil {
 		c.ReturnJson(400, err.Error())
 		return
-	}else{
+	} else {
 		c.ReturnSuccess(data)
 	}
 
@@ -68,15 +68,48 @@ func (c *CategoriesController) DeleteBy(id int) {
 // 分类参数管理
 func (c *CategoriesController) GetAttributes() {
 	cateId, _ := c.Ctx.Params().GetInt("id")
-	c.Ctx.WriteString(cast.ToString(cateId))
+	sel := c.Ctx.URLParam("sel")
+	if data, err := c.Service.GetAttributes(cast.ToInt64(cateId), sel); err != nil {
+		c.ReturnJson(400, err.Error())
+	} else {
+		c.ReturnSuccess(data)
+	}
+
 }
 
-func ParsePageData(c iris.Context) (pageNum, pageSize int) {
-	pageNum = cast.ToInt(c.URLParam("pagenum"))
-	pageSize = cast.ToInt(c.URLParam("pagesize"))
-	if pageNum == 0 && pageSize == 0 {
-		pageNum = 1
-		pageSize = 5000
+// 添加动态参数或者静态属性
+func (c *CategoriesController) PostAttributes() {
+	cateId, _ := c.Ctx.Params().GetInt("id")
+	params := c.ParseParams(c.Ctx)
+
+	if data, err := c.Service.CreateAttributes(cast.ToInt64(cateId), params); err != nil {
+		c.ReturnJson(400, err.Error())
+	} else {
+		c.ReturnSuccess(data)
 	}
-	return pageNum, pageSize
+}
+
+// 删除分类属性参数
+// url: /api/v1.0/categories/:id/attributes/:attrid
+func (c *CategoriesController) DeleteAttributesBy(attrid int) {
+	cateId, _ := c.Ctx.Params().GetInt("id")
+
+	if err := c.Service.DeleteAttributes(cateId, attrid); err != nil {
+		c.ReturnJson(400, err.Error())
+		return
+	}
+	c.ReturnSuccess()
+}
+
+func (c *CategoriesController) GetAttributesBy(attrId int) {
+	println("-----------------------99-")
+	cateId, _ := c.Ctx.Params().GetInt("id")
+	sel := c.Ctx.URLParam("attr_sel")
+	vals := c.Ctx.URLParam("attr_vals")
+	if data, err := c.Service.GetAttributesByAttrId(cateId, attrId, sel, vals); err != nil {
+		c.ReturnJson(400, err.Error())
+		return
+	} else {
+		c.ReturnSuccess(data)
+	}
 }

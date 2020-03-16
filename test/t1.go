@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"vue_shop/utils"
 )
 
 func main() {
@@ -18,7 +19,8 @@ func main() {
 
 	//println(utils.VerifyEmailFormat("tom@gmail.com"))
 	//println(utils.VerifyMobile("18861730375"))
-	copySlice()
+	//copySlice()
+	println(utils.EncryptAES([]byte("goodluck")))
 }
 
 func copySlice(){

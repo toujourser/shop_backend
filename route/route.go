@@ -15,7 +15,6 @@ func InitRoute(app *iris.Application) {
 	api.Party("/rights").Handle(controllers.NewRightsController())
 	api.Party("/role").Handle(controllers.NewRolesController()) // 根据ID获取单个角色 删除角色
 	api.Party("/roles").Handle(controllers.NewRolesController())
-	api.Party("/roles/{roleId:int}/rights/{rightId:int}").Handle(controllers.NewRolesController())
 	api.Party("/roles/{roleId:int}").Handle(controllers.NewRolesController())
 
 	api.Party("/categories").Handle(controllers.NewCategoriesController())

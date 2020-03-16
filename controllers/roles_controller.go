@@ -75,9 +75,8 @@ func (c *RolesController) DeleteBy(id int) {
 }
 
 // 删除角色指定权限
-func (c *RolesController) Delete() {
+func (c *RolesController) DeleteRightsBy(rightId int) {
 	roleId, _ := c.Ctx.Params().GetInt("roleId")
-	rightId, _ := c.Ctx.Params().GetInt("rightId")
 
 	if data, err := c.Service.DeleteRight(roleId, rightId); err != nil {
 		c.ReturnJson(400, err.Error())

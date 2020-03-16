@@ -48,8 +48,7 @@ func (c *UserController) PostLogin() {
 // 获取符合条件的用户
 func (c *UserController) GetList() {
 	query := c.Ctx.URLParam("query")
-	pageNum := cast.ToInt(c.Ctx.URLParam("pagenum"))
-	pageSize := cast.ToInt(c.Ctx.URLParam("pagesize"))
+	pageNum, pageSize := c.ParsePageData(c.Ctx)
 
 	userList, total := c.Service.UserList(pageNum, pageSize, query)
 	data := map[string]interface{}{

@@ -165,5 +165,95 @@ func (r *CategoriesReposotories) Create(pid, level int, name string) (result map
 		"cat_level": cate.CatLevel,
 	}
 	return
+}
 
+// 获取分类的属性列表
+func (r *CategoriesReposotories) GetAttributes(id int64, sel string) (result []map[string]interface{}, err error) {
+	cate := models.Category{
+		CatId: id,
+	}
+	var attrs []*models.Attribute
+	if err := r.db.Debug().Model(&cate).Where("attr_sel = ?", sel).Related(&attrs, "CategoryId").Error; err != nil {
+		return nil, err
+	}
+	for _, attr := range attrs {
+		rlt := map[string]interface{}{
+			"attr_id":    attr.AttrId,
+			"attr_name":  attr.AttrName,
+			"cat_id":     attr.CategoryId,
+			"attr_sel":   attr.AttrSel,
+			"attr_write": attr.AttrWrite,
+			"attr_vals":  attr.AttrVals,
+		}
+		result = append(result, rlt)
+	}
+
+	return
+}
+
+// 添加动态参数或者静态属性
+// vals: 如果是 many 就需要填写值的选项，以逗号分隔
+func (r *CategoriesReposotories) CreateAttributes(id int64, name, sel, vals string) (result map[string]interface{}, err error) {
+	cate := models.Category{
+		CatId: id,
+	}
+	if err := r.db.First(&cate).Error; err != nil {
+		return nil, errors.New("id 指定分类不存在!!!")
+	}
+	var attr models.Attribute
+	attr.CategoryId = id
+	attr.AttrName = name
+	attr.AttrSel = sel
+	attr.AttrVals = vals
+	r.db.Debug().Create(&attr)
+	result = map[string]interface{}{
+		"attr_id":    attr.AttrId,
+		"attr_name":  attr.AttrName,
+		"cat_id":     attr.CategoryId,
+		"attr_sel":   attr.AttrSel,
+		"attr_write": attr.AttrWrite,
+		"attr_vals":  attr.AttrVals,
+	}
+	return
+}
+
+func (r *CategoriesReposotories) judgeExistence(cateId int, attrId int) error {
+	if err := r.db.First(&models.Category{}, cateId).Error; err != nil {
+		return errors.New("该分类不存在")
+	}
+	if err := r.db.First(&models.Attribute{}, attrId).Error; err != nil {
+		return errors.New("该分类属性参数不存在")
+	}
+	return nil
+}
+
+func (r *CategoriesReposotories) DeleteAttributes(cateId int, attrId int) error {
+	if err := r.judgeExistence(cateId, attrId); err != nil {
+		return err
+	}
+
+	if err := r.db.Debug().Delete(&models.Attribute{}, attrId).Error; err != nil {
+		return errors.New("该分类属性删除失败")
+	}
+	return nil
+}
+
+func (r *CategoriesReposotories) GetAttributesByAttrId(cateId int, attrId int, sel, vals string) (result map[string]interface{}, err error) {
+	if err = r.judgeExistence(cateId, attrId); err != nil {
+		return nil, err
+	}
+	var attr models.Attribute
+	if err = r.db.Debug().Where("attr_id = ? and attr_sel = ?", attrId, sel).First(&attr).Error; err != nil {
+		return nil, errors.New("查询不到数据")
+	}
+
+	result = map[string]interface{}{
+		"attr_id":    attr.AttrId,
+		"attr_name":  attr.AttrName,
+		"cat_id":     attr.CategoryId,
+		"attr_sel":   attr.AttrSel,
+		"attr_write": attr.AttrWrite,
+		"attr_vals":  attr.AttrVals,
+	}
+	return
 }

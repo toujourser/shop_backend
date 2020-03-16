@@ -1,3 +1,16 @@
 {"level":"ERROR","timestamp":"2020-03-05 16:02:40.733","file":"model/init.go:55","msg":"Database connection failed. Database name: vue_shop","data":{"error":"sql: unknown driver \"mysql\" (forgotten import?)"}}
 {"level":"ERROR","timestamp":"2020-03-05 16:04:13.688","file":"model/init.go:56","msg":"Database connection failed. Database name: vue_shop","data":{"error":"invalid DSN: did you forget to escape a param value?"}}
 {"level":"INFO","timestamp":"2020-03-11 23:25:13.996","file":"config/config.go:65","msg":"Config file changed: /Users/mds/Documents/go/vue_shop_server/vue_shop/conf/config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:13:51.314","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:13:51.316","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:14:04.078","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:14:04.079","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:14:43.617","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:14:43.619","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:58:09.264","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:58:09.266","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"ERROR","timestamp":"2020-03-16 15:59:06.300","file":"models/init.go:56","msg":"Database connection failed. Database name: vue_shop","data":{"error":"dial tcp 192.168.253.225:3307: connectex: No connection could be made because the target machine actively refused it."}}
+{"level":"INFO","timestamp":"2020-03-16 15:59:18.115","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:59:18.117","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:59:28.618","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
+{"level":"INFO","timestamp":"2020-03-16 15:59:28.619","file":"config/config.go:65","msg":"Config file changed: D:\\study\\vue_shop\\vue_shop\\conf\\config.yaml\n"}
