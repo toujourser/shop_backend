@@ -1962,3 +1962,4 @@ brew install GraphicsMagick
           ]
         }
   ```
+

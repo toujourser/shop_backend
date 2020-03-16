@@ -257,3 +257,28 @@ func (r *CategoriesReposotories) GetAttributesByAttrId(cateId int, attrId int, s
 	}
 	return
 }
+
+func (r *CategoriesReposotories) PutAttributesByAttrId(cateId int, attrId int, name, sel, vals string) (result map[string]interface{}, err error) {
+	if err = r.judgeExistence(cateId, attrId); err != nil {
+		return nil, err
+	}
+	var attr models.Attribute
+	if err = r.db.Debug().Where("attr_id = ? and category_id = ?", attrId, cateId).First(&attr).Error; err != nil {
+		return nil, errors.New("查询不到数据")
+	}
+
+	attr.AttrName = name
+	attr.AttrSel = sel
+	attr.AttrVals = vals
+	r.db.Save(&attr)
+	result = map[string]interface{}{
+		"attr_id":    attr.AttrId,
+		"attr_name":  attr.AttrName,
+		"cat_id":     attr.CategoryId,
+		"attr_sel":   attr.AttrSel,
+		"attr_write": attr.AttrWrite,
+		"attr_vals":  attr.AttrVals,
+	}
+	return
+
+}

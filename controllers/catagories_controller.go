@@ -101,12 +101,24 @@ func (c *CategoriesController) DeleteAttributesBy(attrid int) {
 	c.ReturnSuccess()
 }
 
+// 根据 ID 查询参数
 func (c *CategoriesController) GetAttributesBy(attrId int) {
-	println("-----------------------99-")
 	cateId, _ := c.Ctx.Params().GetInt("id")
 	sel := c.Ctx.URLParam("attr_sel")
 	vals := c.Ctx.URLParam("attr_vals")
 	if data, err := c.Service.GetAttributesByAttrId(cateId, attrId, sel, vals); err != nil {
+		c.ReturnJson(400, err.Error())
+		return
+	} else {
+		c.ReturnSuccess(data)
+	}
+}
+
+// 编辑提交参数
+func (c *CategoriesController) PutAttributesBy(attrId int) {
+	cateId, _ := c.Ctx.Params().GetInt("id")
+	params := c.ParseParams(c.Ctx)
+	if data, err := c.Service.PutAttributesByAttrId(cateId, attrId, params); err != nil {
 		c.ReturnJson(400, err.Error())
 		return
 	} else {
