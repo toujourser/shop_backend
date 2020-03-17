@@ -18,7 +18,7 @@ func InitRoute(app *iris.Application) {
 	api.Party("/roles/{roleId:int}").Handle(controllers.NewRolesController())
 
 	api.Party("/categories").Handle(controllers.NewCategoriesController())
-	api.Party("/categories/{id:int}").Handle(controllers.NewCategoriesController()) // 分类参数管理
+	api.Party("/categorie/{id:int}").Handle(controllers.NewCategoriesController()) // 分类参数管理
 
 	api.Party("/goods").Handle(controllers.NewGoodsController())
 	api.Party("/reports/type/1").Handle(controllers.NewReportsController())
