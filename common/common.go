@@ -82,12 +82,16 @@ func (c *Common) ReturnSuccess(args ...interface{}) {
 func (c *Common) ParsePageData(ctx iris.Context) (pageNum, pageSize int) {
 	pageNum = cast.ToInt(ctx.URLParam("pagenum"))
 	pageSize = cast.ToInt(ctx.URLParam("pagesize"))
-	if pageNum == 0 && pageSize == 0 {
+	if pageNum == 0 {
 		pageNum = 1
-		pageSize = 2000
 	}
-	if pageSize >= 2000 {
-		pageSize = 2000
+
+	if pageSize == 0 {
+		pageSize = 10
+	}
+
+	if pageSize >= 1000 {
+		pageSize = 1000
 	}
 	return pageNum, pageSize
 }

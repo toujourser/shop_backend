@@ -20,7 +20,8 @@ func NewCategoriesController() *CategoriesController {
 // 商品分类数据列表
 func (c *CategoriesController) Get() {
 	_type := cast.ToInt(c.Ctx.URLParam("type"))
-	pageNum, pageSize := c.ParsePageData(c.Ctx)
+	pageNum := cast.ToInt(c.Ctx.URLParam("pagenum"))
+	pageSize := cast.ToInt(c.Ctx.URLParam("pagesize"))
 	data := c.Service.List(_type, pageNum, pageSize)
 	c.ReturnSuccess(data)
 }
