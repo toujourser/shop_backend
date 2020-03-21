@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"github.com/kataras/iris/v12"
+	"github.com/spf13/cast"
 	"vue_shop/repositories"
 )
 
@@ -21,8 +22,7 @@ func (s *GoodsServices) List(pageNum, pageSize int, query string) (map[string]in
 func (s *GoodsServices) Create(ctx iris.Context) (map[string]interface{}, error) {
 	var goodsObj repositories.GoodsObj
 	ctx.ReadJSON(&goodsObj)
-
-	if goodsObj.GoodsName == "" || goodsObj.GoodsPrice == 0 {
+	if goodsObj.GoodsName == "" || cast.ToInt(goodsObj.GoodsPrice) == 0 {
 		return nil, errors.New("请求参错误!!!")
 	}
 	return s.repo.Create(goodsObj)
@@ -36,7 +36,7 @@ func (s *GoodsServices) Update(id int, ctx iris.Context) (map[string]interface{}
 	var goodsObj repositories.GoodsObj
 	ctx.ReadJSON(&goodsObj)
 
-	if goodsObj.GoodsName == "" || goodsObj.GoodsPrice == 0 {
+	if goodsObj.GoodsName == "" || cast.ToInt(goodsObj.GoodsPrice) == 0 {
 		return nil, errors.New("请求参错误!!!")
 	}
 	return s.repo.Update(id, goodsObj)

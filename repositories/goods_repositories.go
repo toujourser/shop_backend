@@ -18,12 +18,12 @@ func NewGoodsReposotories() *GoodsReposotories {
 }
 
 type GoodsObj struct {
-	GoodsName      string  `json:"goods_name"`
-	GoodsCat       string  `json:"goods_cat"`
-	GoodsPrice     float64 `json:"goods_price"`
-	GoodsNumber    int     `json:"goods_number"`
-	GoodsWeight    float64 `json:"goods_weight"`
-	GoodsIntroduce string  `json:"goods_introduce"`
+	GoodsName      string `json:"goods_name"`
+	GoodsCat       string `json:"goods_cat"`
+	GoodsPrice     string `json:"goods_price"`
+	GoodsNumber    string `json:"goods_number"`
+	GoodsWeight    string `json:"goods_weight"`
+	GoodsIntroduce string `json:"goods_introduce"`
 	Pics           []struct {
 		Pic string `json:"pic"`
 	} `json:"pics"`
@@ -67,9 +67,9 @@ func (r *GoodsReposotories) Create(goodsObj GoodsObj) (result map[string]interfa
 
 	catIds := strings.Split(goodsObj.GoodsCat, ",")
 	goods.GoodsName = goodsObj.GoodsName
-	goods.GoodsPrice = goodsObj.GoodsPrice
-	goods.GoodsNumber = goodsObj.GoodsNumber
-	goods.GoodsWeight = goodsObj.GoodsWeight
+	goods.GoodsPrice = cast.ToFloat64(goodsObj.GoodsPrice)
+	goods.GoodsNumber = cast.ToInt(goodsObj.GoodsNumber)
+	goods.GoodsWeight = cast.ToFloat64(goodsObj.GoodsWeight)
 	goods.GoodsIntroduce = goodsObj.GoodsIntroduce
 	goods.AddTime = time.Now().Unix()
 	goods.UpdTime = time.Now().Unix()
@@ -147,11 +147,11 @@ func (r *GoodsReposotories) GetOne(id int) (result map[string]interface{}, err e
 		return nil, errors.New("商品信息查询失败!!!")
 	}
 
-	if err := r.db.Debug().Where("goods_id = ?", goods.GoodsId).Find(&pics).Error; err != nil {
+	if err := r.db.Where("goods_id = ?", goods.GoodsId).Find(&pics).Error; err != nil {
 		return nil, errors.New("商品相册关联信息失败!!!")
 	}
 
-	if err := r.db.Debug().Where("goods_id = ?", goods.GoodsId).Find(&attrs).Error; err != nil {
+	if err := r.db.Where("goods_id = ?", goods.GoodsId).Find(&attrs).Error; err != nil {
 		return nil, errors.New("商品属性关联信息失败!!!")
 	}
 
@@ -169,7 +169,7 @@ func (r *GoodsReposotories) Update(id int, goodsObj GoodsObj) (result map[string
 	if err := r.db.First(&goods, id).Error; err != nil {
 		return nil, errors.New("商品信息不存在!!!")
 	}
-	if err := r.db.Debug().Where("goods_id = ?", goods.GoodsId).Find(&pics).Error; err != nil {
+	if err := r.db.Where("goods_id = ?", goods.GoodsId).Find(&pics).Error; err != nil {
 		return nil, errors.New("商品相册关联信息失败!!!")
 	}
 
@@ -178,9 +178,9 @@ func (r *GoodsReposotories) Update(id int, goodsObj GoodsObj) (result map[string
 	}
 
 	goods.GoodsName = goodsObj.GoodsName
-	goods.GoodsPrice = goodsObj.GoodsPrice
-	goods.GoodsNumber = goodsObj.GoodsNumber
-	goods.GoodsWeight = goodsObj.GoodsWeight
+	goods.GoodsPrice = cast.ToFloat64(goodsObj.GoodsPrice)
+	goods.GoodsNumber = cast.ToInt(goodsObj.GoodsNumber)
+	goods.GoodsWeight = cast.ToFloat64(goodsObj.GoodsWeight)
 	goods.GoodsIntroduce = goodsObj.GoodsIntroduce
 	goods.UpdTime = time.Now().Unix()
 	pics[0].PicsSma = goodsObj.Pics[0].Pic
