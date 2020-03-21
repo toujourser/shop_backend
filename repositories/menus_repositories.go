@@ -132,11 +132,6 @@ func GetRightsList(menus []*models.Permission, db *gorm.DB) ([]map[string]interf
 		}
 	}
 
-	//for _, item := range menusMap {
-	//	fmt.Printf("%+v \n", item)
-	//	println("==================")
-	//}
-
 	return menusMap, nil
 }
 
@@ -157,52 +152,3 @@ func SplitLevel(menus []*models.Permission) (lv1 []*models.Permission, lv2 []*mo
 	return
 }
 
-/*
-	lv1 := []*models.Permission{}
-	lv2 := []*models.Permission{}
-	lv3 := []*models.Permission{}
-
-	for _, m := range menus {
-		if m.PsLevel == "0" {
-			lv1 = append(lv1, m)
-		} else if m.PsLevel == "1" {
-			lv2 = append(lv2, m)
-		} else if m.PsLevel == "2" {
-			lv3 = append(lv3, m)
-		}
-	}
-
-	menusMap := make(map[string][]map[string][]string)
-	for _, m1 := range lv1 {
-		menusMap[m1.PsName] = []map[string][]string{}
-	}
-
-	for _, m2 := range lv2 {
-		var mp models.Permission
-		r.db.Where("ps_id = ?", m2.PsPid).First(&mp)
-		for mmk, mmv := range menusMap {
-			if mp.PsName == mmk {
-				menusMap[mmk] = append(mmv, map[string][]string{
-					m2.PsName: make([]string, 0),
-				})
-			}
-
-		}
-	}
-
-	for _, m3 := range lv3 {
-		var mp models.Permission
-		r.db.Where("ps_id = ?", m3.PsPid).First(&mp)
-		for mmk, mmv := range menusMap {
-			for subIndexK, subv := range mmv {
-				for sunk, sunListV := range subv {
-					if mp.PsName == sunk {
-						sunListV = append(sunListV, m3.PsName)
-						menusMap[mmk][subIndexK][sunk] = sunListV
-					}
-				}
-			}
-		}
-	}
-	return menusMap, nil
-*/

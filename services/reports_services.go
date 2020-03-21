@@ -9,3 +9,7 @@ type ReportsServices struct {
 func NewReportsServices() *ReportsServices {
 	return &ReportsServices{repo: repositories.NewReportsRepositories()}
 }
+
+func (s *ReportsServices)Reports()(map[string]interface{}, error){
+	return s.repo.Reports()
+}

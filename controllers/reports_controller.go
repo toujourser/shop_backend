@@ -16,6 +16,10 @@ func NewReportsController() *ReportsController {
 	return &ReportsController{Service: services.NewReportsServices()}
 }
 
-func (c *ReportsController)Get(){
-
+func (c *ReportsController) Get() {
+	if data, err := c.Service.Reports(); err != nil {
+		c.ReturnJson(500, err.Error())
+	} else {
+		c.ReturnSuccess(data)
+	}
 }

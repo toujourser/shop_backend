@@ -23,4 +23,6 @@ func InitRoute(app *iris.Application) {
 	api.Party("/goods").Handle(controllers.NewGoodsController())
 	api.Party("/reports/type/1").Handle(controllers.NewReportsController())
 	api.Party("/upload").Handle(controllers.NewUploadFileController()) // 上传图片
+
+	api.Party("/orders").Handle(controllers.NewOrdersController()) // 订单管理
 }
