@@ -883,7 +883,7 @@ type=tree
 
 ### 1.7.1. 参数列表
 
-- 请求路径：categories/:id/attributes
+- 请求路径：categorie/:id/attributes
 - 请求方法：get
 - 请求参数
 

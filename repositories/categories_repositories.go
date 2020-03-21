@@ -46,7 +46,7 @@ func (r *CategoriesReposotories) DeleteOne(id int) error {
 func (r *CategoriesReposotories) List(_type, pageNum, pageSize int) map[string]interface{} {
 	if pageNum == 0 && pageSize == 0 {
 		pageNum = 1
-		pageSize = 2000
+		pageSize = 5
 	}
 	var data []map[string]interface{}
 	switch _type {
